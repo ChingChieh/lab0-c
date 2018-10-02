@@ -72,29 +72,14 @@ bool q_insert_head(queue_t *q, char *s)
     if (newh == NULL) {
         return false;
     }
-    int s_len = (int) strlen(s) + 1;  // Don't forget the \0!!!!!!!
+    size_t s_len = strlen(s) + 1;  // Don't forget the \0!!!!!!!
     /* Don't forget to allocate space for the string and copy it */
     newh->value = (char *) malloc(s_len * sizeof(char));
     if (newh->value == NULL) {
         free(newh);
         return false;
     }
-    // strcpy(newh->value,s);
-
-    char *ptr = newh->value;
-    switch (s_len % 4) {
-        for (; s_len > 0; s_len -= 4) {
-        case 0:
-            *ptr++ = *s++;
-        case 3:
-            *ptr++ = *s++;
-        case 2:
-            *ptr++ = *s++;
-        case 1:
-            *ptr++ = *s++;
-        }
-    }
-
+    strcpy(newh->value, s);
     /* What if either call to malloc returns NULL? */
     newh->next = q->head;
     if (newh->next == NULL) {  // Change the tail
